@@ -1,0 +1,308 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bigstrut}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage[top=.75in, bottom=.95in, left=.75in, right=.75in]{geometry}
+\usepackage{float}
+\usepackage{lastpage}
+\usepackage{tikz}
+\usepackage[latin1]{inputenc}
+\usepackage{color}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{calc}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{circuitikz}
+\usepackage{caption}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\normalsize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=python,                  % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\floatstyle{boxed}
+\floatstyle{plain}
+\restylefloat{figure}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\setlength{\headheight}{59.0pt}
+\def\inputGnumericTable{}
+\fancyhead[CO]{\textbf{Air Force Institute of Technology\\Department of Electrical and Computer Engineering\\
+ Cryptography and Data Security (CSCE-544) In Class Work Day \#3\newline \newline Name: Micah Hayden}}
+\lhead{\today}
+\rhead{Page \thepage{} of \pageref{LastPage} }
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
+\begin{document}
+\subsection*{[100 Points] Modify the Caesar Shift Cipher Python Implementation Listed Such That Takes the Script Takes as Input a Binary File and Encrypts/Decrypts the Output to Another Binary File}
+\begin{figure}[H]
+\begin{lstlisting}
+message = 'This is my secret message'
+key = 11
+mode = 'encrypt'
+SYMBOLS='ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz1234567890!?.'
+translated=''
+for symbol in message:
+    if symbol in SYMBOLS:
+        symbolIndex=SYMBOLS.find(symbol)
+        if mode =='encrypt':
+            translatedIndex=(symbolIndex+key)%len(SYMBOLS)
+        elif mode == 'decrypt':
+            translatedIndex=(symbolIndex-key)%len(SYMBOLS)
+        translated+=SYMBOLS[translatedIndex]
+    else:
+        translated+=symbol
+print(translated)
+\end{lstlisting}
+\vspace{-1cm}
+\caption*{Sweigart, A.(2018). \emph{Cracking Odes with Python}. San Francisco, CA: No Starch Press}
+\end{figure}
+
+Below is the Python script I wrote for the caesar cipher, I utilized "Affine\_Cipher.py" as the test input to verify functionality.
+\begin{figure}[H]
+\begin{lstlisting}
+print("Homework 1: byte-wise caesar cypher")
+
+def Caesar_Bytewise(shift, inFile, outFile):
+	with open(inFile, "rb") as f:
+		with open(outFile, "wb") as output:
+			byte = f.read(1)
+			while byte != b"":
+				# Convert byte into an integer value
+				value = int.from_bytes(byte, byteorder='big')
+				# Calculate the output value given the shift
+				out_value = ( value + shift) % 256
+				# Write the output value to the output file, as a byte
+				output.write( out_value.to_bytes(1, byteorder='big', signed=False))
+				byte = f.read(1)
+			output.close()
+		f.close()
+
+def main():
+	Caesar_Bytewise(100, "Affine_Cipher.py", "HW1_output.txt")
+	
+	# Used for testing:
+	#Caesar_Bytewise(156, "HW1_output.txt", "HW1_outputVerification.txt")
+
+
+if __name__ == "__main__":
+	main()
+\end{lstlisting}
+\vspace{-1cm}
+\caption*{Modified function for byte-wise caesar cipher, written to be portable to larger python script}
+\end{figure}
+
+\subsection*{[5 Points] Represent in binary using Two's complement (signed) - Calculators, Internet allowed}
+Converting to Two's complement:  \newline
+If positive: $2's \, Complement(x) = x $; if negative: $2's \, Complement(x) \, = \, x \oplus \mathtt{0xFF} + 1$
+
+\begin{enumerate}
+  \setlength{\itemsep}{20pt}%
+  \item[a)]127: 
+  $$ 127 = \boxed{0111 \, 1111} $$
+  \item[b)]-128:
+  $$ 128 = 1000 0000 \rightarrow 0111 1111 + 1 = \boxed{1000 0000} $$
+  \item[c)]-1:
+  $$ 1 = 0000 0001 \rightarrow 1111 1110 + 1 = \boxed{1111 1111} $$
+\end{enumerate}
+
+\subsection*{[5 Points] Represent the following decimal numbers in hexadecimal (unsigned) - Calculators, Internet allowed}
+\begin{enumerate}
+  \setlength{\itemsep}{20pt}
+  \item[a)] 10:
+  $$ 10 = \boxed{\mathtt{0xA}} $$
+  \item[b)] 33:
+  $$ 33 = 16 \cdot 2 + 1 = \boxed{\mathtt{0x21}} $$
+  \item[c)] 120:
+  $$ 120 = 16 \cdot 7 + 8 = \boxed{\mathtt{0x78}} $$
+  \item[]
+\end{enumerate} 
+\subsection*{[5 Points] Find two different words (plainText$_1$, plainText$_2$) that are at least 4 characters long such that the cipher-texts produced using the Caesar Cipher algorithm are identical (cipherText$_1$ = cipherText$_2$) provided that they use two different keys (key$_1$, key$_2$). List the two plain-text words (plainText$_1$, plainText$_2$),  and their corresponding keys (key$_1$, and key$_2$). }
+
+The below pairing was found by using a brute force approach with two online Caesar Cipher algorithms.  For the first, I chose a four letter word at random, and shifted it by some key $x$.  This produced plainText$_1 \rightarrow $ cipherText$_1$ with $key=x$.  I then used cipherText$_1$ as the input to the second Caesar Cipher, and checked each key to see if it produced a corresponding English word, let this key be $x'$.  This would indicate that $key_2 = 26 - x'$.
+
+The words, cipher texts, and keys are as follows:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|} \hline
+\textbf{Plain Text} & \textbf{Cipher Text} & \textbf{Key}  \\ \hline
+cows & htbx & 5 \\ \hline
+semi & htbx & 15 \\ \hline
+\end{tabular}
+\caption*{}
+\end{table}
+
+\subsection*{[10 Points] Fill in the blank (all from the book):}
+
+\begin{enumerate}
+  \setlength{\itemsep}{20pt}
+  \item[a)] \underline{ Symmetric Encryption}  Participants share a secret key to encrypt and decrypt and decryption is the inverse operation of encryption.
+  \item[b)]  \underline{ Asymmetric/Public Key Encryption} Participants share a public portion of the key, but a private portion is retained by a single participant for secure encryption and decryption and digital signatures.
+  \item[c)] \underline{ Cryptography } The science of secret writing.
+  \item[d)] \underline{ Cryptanalysis } The science and art of breaking the secure properties of crypto systems.
+  \item[e)] \underline{ Moore's Law } The concept that computational power doubles every eighteen months so that brute force attacks against cryptosystems will be faster in the future.
+  \item[f)] \underline{ Kerckhoffs' Principle } The concept that a cryptosystem should be secure even if the attacker knows all the details (but not the keys) of the targeted cryptosystem.
+  \item[]
+\end{enumerate}
+
+\setcounter{section} {1}
+\setcounter{subsection} {8}
+\subsection{[25 Points] Compute $x$ as far as possible without a calculator. Where appropriate, make use of a smart decomposition of the exponent as shown in the example in Sect. 1.4.1:}
+
+
+\begin{enumerate}
+  \setlength{\itemsep}{20pt}%
+  \item[a)]  $x = 3^2 \mod 13$
+  $$ \boxed{x = 9} $$
+
+  \item[b)] $x = 7^2 \mod 13$
+  $$ x = 49 = 13 \cdot 3 + 10 \rightarrow \boxed{x = 10}$$
+  \item[c)] $x = 7^{100} \mod 13$
+  \begin{align*}
+  x &= 7^{100} \mod 13 = (7^2)^{50} \mod 13 = 10^{50} \mod 13 	& 												\\
+  	&														  	& 10^2 \mod 13 = 9								\\
+  	&							  	  						  	& 10^3 \mod 13 = 10^2 \cdot 10 \mod 13 			\\
+  	&														  	& 10^3 \mod 13 = 90 \mod 13 = 12				\\
+  x &= 10^{50} \mod 13 = (10^2 \cdot 10^3)^{10} \mod 13 		& 												\\
+  x &= (9 \cdot 12)^{10} \mod 13								& 9 \cdot 12 \mod 13 = 108 \mod 13 = 4 			\\
+  x &= 4^{10} \mod 13 = (4^2)^5 \mod 13						  	& 4^2 \mod 13 = 3 \\
+  x &= 3^5 \mod 13 = 3^2 \cdot 3^3 \mod 13					  	& 3^3 \mod 13 = 27 \mod 13 = 1 					\\
+  x &= 9 \cdot 1 \mod 13 									  	& 												\\
+  x &= 7^{100} \mod 13 = \boxed{9 = x}							&									
+  \end{align*}
+  
+  \newpage
+  \item[d)] This last problem is called a \emph{discrete logarithm} and points to a hard problem which we discuss in Chap. 8. The security of many public-key schemes is based on the hardness of solving the discrete logarithm for large numbers, e.g., with more than 1000 bits.\\$7\times x = 11 \mod 13$
+  \begin{align*}
+  7 \cdot x = & 11 \mod 13 \\
+  7 \cdot 9 = & 63 \\
+  			  & 63 \mod 13 = 11 \\
+  \boxed{x = 9} &
+  \end{align*} 
+\end{enumerate}
+
+\setcounter{subsection} {10}
+\subsection{[25 Points] This problem deals with the affine cipher with the key parameters $\alpha = 7$, $\beta = 22$.}
+I utilized a python script to solve this problem, and the code I wrote is included in Appendix A.
+\begin{enumerate}
+    \setlength{\itemsep}{20pt}%
+    \item[a)] Decrypt the following text: \texttt{falszztysyjzyjkywjrztyjztyynaryjkyswarztyegyyj}
+    
+    The decrypted text is as follows:  \textbf{firstthesentenceandthentheevidencesaidthequeen}
+    \item[b)] Who wrote the line?
+    
+    Lewis Caroll in \textit{Alice's Adventures Under Ground}
+    \item[]
+\end{enumerate}
+
+\setcounter{subsection}{12}
+\subsection{[25 Points] In an attack scenario, we assume that the attacker Oscar manages somehow to provide Alice with a few pieces of plaintext that she encrypts.Show how Oscar can break the affine cipher by using two pairs of plaintext-ciphertext, $(x_1 ,y_1)$ and $(x_2 ,y_2)$. What is the condition for choosing $x_1$ and $x_2$?}
+
+\textbf{Remark}:  Inpractice,such an assumption turns out to be valid for certain settings, e.g., encryption by Web servers, etc. This attack scenario is,thus,very important and is denoted as a \emph{chosen plaintext} attack.
+\vspace{1cm}
+
+One must select $x_1$ and $x_2$ such that $y_1 \neq y_2$.
+This would then give you the following equations:
+
+\begin{equation}
+\label{Eq1}
+\alpha \cdot x_1 + \beta \mod 26 = y_1
+\end{equation}
+
+\begin{equation}
+\label{Eq2}
+\alpha \cdot x_2 + \beta \mod 26 = y_2
+\end{equation}
+With (1) and (2), Oscar has two equations with two unknowns: $\alpha$ and $\beta$. Thus, this system of equations can be solved, giving Oscar the keys $\alpha$ and $\beta$.
+
+\newpage
+\subsection*{Appendix A:  Python Script}
+\begin{minipage}[t]{1.05\textwidth}
+\begin{lstlisting}
+import string
+import math
+
+def ModularInverse(alpha):
+	running = True
+	inv_alpha = 1
+	while running:
+		if ( (alpha * inv_alpha) % 26 == 1):
+			print( "Modular inverse of {0} is: {1}".format(alpha, inv_alpha) )
+			running = False
+			return inv_alpha
+		else:
+			inv_alpha += 1
+			
+
+def affineDecrypt(inv_alpha, beta, input):
+	output = ""
+	for letter in input:
+		in_index = string.ascii_lowercase.index(letter)
+		out_index = ( inv_alpha * (in_index - beta) ) % 26 
+		output += string.ascii_lowercase[out_index]
+	return output
+
+def affineEncrypt(alpha, beta, input):
+	output = ""
+	for letter in input:
+		in_index = string.ascii_lowercase.index(letter)
+		out_index = ( in_index * alpha + beta) % 26 
+		output += string.ascii_lowercase[out_index]
+	return output
+
+def main():
+	encrypt = True
+	alpha = 7
+	beta = 22
+	if encrypt:
+		print("Starting encrypt with alpha = {0} and beta = {1}: \n".format(alpha, beta))
+		input = "firstthesentenceandthentheevidencesaidthequeen"
+		output = affineEncrypt(alpha, beta, input)
+	else:
+		print("Starting decrypt with alpha = {0} and beta = {1}: \n".format(alpha, beta))
+		input = "falszztysyjzyjkywjrztyjztyynaryjkyswarztyegyyj"
+		output = affineDecrypt(ModularInverse(alpha), beta, input)
+	
+	print( "The output is: \n" + output )
+
+if __name__ == "__main__":
+	main()
+\end{lstlisting}
+\end{minipage}
+
+\end{document}
