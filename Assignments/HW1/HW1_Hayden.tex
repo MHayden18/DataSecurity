@@ -239,7 +239,10 @@ I utilized a python script to solve this problem, and the code I wrote is includ
 \textbf{Remark}:  Inpractice,such an assumption turns out to be valid for certain settings, e.g., encryption by Web servers, etc. This attack scenario is,thus,very important and is denoted as a \emph{chosen plaintext} attack.
 \vspace{.5 cm}
 
-One must select $x_1$ and $x_2$ such that $\mathbf{(x_2 - x_1) \mod m = 1 \rightarrow (x_2 - x_1) = m^{-1}}$.
+One must select $x_1$ and $x_2$ such that: 
+\begin{align*}
+\mathbf{(x_2 - x_1) \mod m = 1 \rightarrow (x_2 - x_1) = m^{-1} \rightarrow \boxed{\gcd (x_2-x_1, m) = 1}}
+\end{align*}
 
 The derivation of this condition is shown below, starting from the definition of the affine cipher: $(x \cdot \alpha + \beta) \mod m = y$, under the constraints: $1 \leq \alpha \leq m-1$ and $0 \leq \beta \leq m-1$.  
 The constraints of $\alpha$ and $\beta$ imply the following:
@@ -249,32 +252,35 @@ The constraints of $\alpha$ and $\beta$ imply the following:
 
 \noindent \textbf{Derivation:}
 \hrule
-
-\begin{minipage}{.45\textwidth} %
+\vspace{-.5cm}
+\begin{minipage}{.4\textwidth} %
  \begin{align*}
+ \\
 (x_1 \cdot \alpha + \beta) \mod m &= y_1 \\
 (x_2 \cdot \alpha + \beta - x_1 \cdot \alpha - \beta) \mod m &= y_2 - y_1 \\
  \alpha \cdot (x_2 - x_1) \mod m &= y_2 - y_1 \\
 \text{\textbf{Let $\mathbf{x_2-x_1 = m^{-1}}$, which yields:}}\\
   \alpha \cdot m^{-1} \mod m &= y_2 - y_1 \\
-  \Aboxed{\alpha &= y_2 - y_1}  \\
+  \Aboxed{\alpha &= y_2 - y_1}
+  \\
   \\
 \end{align*}
 \end{minipage} %
+\hspace{.25cm}
 \begin{minipage}{.5\textwidth}
 \begin{align*}
 &(x_2 \cdot \alpha + \beta) \mod m = y_2 \\
-\text{Substitute the value $\alpha = y_2-y_1$:} & \\
+\text{Substitute the }& \text{$\alpha = y_2-y_1$} \\
 &x_2 \cdot (y_2 - y_1) + \beta \mod m = y_2 \\
-\text{Multiply both sides by $m^{-1}$:} & \\
-& x_2 \cdot y_2 - x_2 \cdot y_1 + \beta = y_2 \cdot m^{-1} \\
-& \beta = y_2 \cdot (x_2 - x_1) - x_2 \cdot y_2 + x_2 \cdot y_1  \\
-& \Aboxed{\beta = x_2 \cdot y_1 - y_2 \cdot x_1 }
+\text{Multiply both } & \text{sides by $m^{-1}$:}  \\
+& (x_2 \cdot y_2 - x_2 \cdot y_1 + \beta) \cdot m^{-1} \mod m = y_2 \cdot m^{-1} \mod m \\
+& \beta = y_2 \cdot (x_2 - x_1) - x_2 \cdot y_2 + x_2 \cdot y_1 \mod m \\
+\Aboxed{& \beta = x_2 \cdot y_1 - y_2 \cdot x_1 \mod m}
 \end{align*}
 \end{minipage}
 
 
-Thus, by letting $x_2-x_1 = m^{-1}$, one arrives at the following system of equations, which can be solved for $\alpha$ and $\beta$, given values for $(x_1, y_1)$ and $(x_2, y_2)$.\footnote{Eq. \#2 includes $\mod m$ in case the difference $x_2 \cdot y_1 - y_2 \cdot x_1 > m$.  This follows from the equality $\beta \mod m = \beta$.}
+Thus, by letting $x_2-x_1 = m^{-1}$, one arrives at the following system of equations, which can be solved for $\alpha$ and $\beta$, given values of $(x_1, y_1)$ and $(x_2, y_2)$.
 
 \vspace{-.5 cm}
 \begin{align*}
@@ -282,7 +288,7 @@ Thus, by letting $x_2-x_1 = m^{-1}$, one arrives at the following system of equa
 \end{align*}
 
 \newpage
-\subsection*{Appendix A:  Python Script}
+\subsection*{Appendix A:  Python Scripts}
 \begin{minipage}[t]{1.05\textwidth}
 \begin{lstlisting}
 import string
@@ -317,17 +323,11 @@ def affineEncrypt(alpha, beta, input):
 	return output
 
 def main():
-	encrypt = True
 	alpha = 7
 	beta = 22
-	if encrypt:
-		print("Starting encrypt with alpha = {0} and beta = {1}: \n".format(alpha, beta))
-		input = "firstthesentenceandthentheevidencesaidthequeen"
-		output = affineEncrypt(alpha, beta, input)
-	else:
-		print("Starting decrypt with alpha = {0} and beta = {1}: \n".format(alpha, beta))
-		input = "falszztysyjzyjkywjrztyjztyynaryjkyswarztyegyyj"
-		output = affineDecrypt(ModularInverse(alpha), beta, input)
+	print("Starting decrypt with alpha = {0} and beta = {1}: \n".format(alpha, beta))
+	input = "falszztysyjzyjkywjrztyjztyynaryjkyswarztyegyyj"
+	output = affineDecrypt(ModularInverse(alpha), beta, input)
 	
 	print( "The output is: \n" + output )
 
