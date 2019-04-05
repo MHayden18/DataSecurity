@@ -2,6 +2,8 @@
 \usepackage{graphicx}
 \usepackage{alltt}
 \usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{cancel}
 \usepackage{amsfonts}
 \usepackage{bigstrut}
 \usepackage{enumerate}
@@ -186,7 +188,7 @@ semi & htbx & 15 \\ \hline
 
 
 \begin{enumerate}
-  \setlength{\itemsep}{20pt}%
+  \setlength{\itemsep}{10pt}%
   \item[a)]  $x = 3^2 \mod 13$
   $$ \boxed{x = 9} $$
 
@@ -220,7 +222,7 @@ semi & htbx & 15 \\ \hline
 \subsection{[25 Points] This problem deals with the affine cipher with the key parameters $\alpha = 7$, $\beta = 22$.}
 I utilized a python script to solve this problem, and the code I wrote is included in Appendix A.
 \begin{enumerate}
-    \setlength{\itemsep}{20pt}%
+    \setlength{\itemsep}{10pt}%
     \item[a)] Decrypt the following text: \texttt{falszztysyjzyjkywjrztyjztyynaryjkyswarztyegyyj}
     
     The decrypted text is as follows:  \textbf{firstthesentenceandthentheevidencesaidthequeen}
@@ -231,24 +233,53 @@ I utilized a python script to solve this problem, and the code I wrote is includ
 \end{enumerate}
 
 \setcounter{subsection}{12}
+\newpage
 \subsection{[25 Points] In an attack scenario, we assume that the attacker Oscar manages somehow to provide Alice with a few pieces of plaintext that she encrypts.Show how Oscar can break the affine cipher by using two pairs of plaintext-ciphertext, $(x_1 ,y_1)$ and $(x_2 ,y_2)$. What is the condition for choosing $x_1$ and $x_2$?}
 
 \textbf{Remark}:  Inpractice,such an assumption turns out to be valid for certain settings, e.g., encryption by Web servers, etc. This attack scenario is,thus,very important and is denoted as a \emph{chosen plaintext} attack.
-\vspace{1cm}
+\vspace{.5 cm}
 
-One must select $x_1$ and $x_2$ such that $y_1 \neq y_2$.
-This would then give you the following equations:
+One must select $x_1$ and $x_2$ such that $\mathbf{(x_2 - x_1) \mod m = 1 \rightarrow (x_2 - x_1) = m^{-1}}$.
 
-\begin{equation}
-\label{Eq1}
-\alpha \cdot x_1 + \beta \mod 26 = y_1
-\end{equation}
+The derivation of this condition is shown below, starting from the definition of the affine cipher: $(x \cdot \alpha + \beta) \mod m = y$, under the constraints: $1 \leq \alpha \leq m-1$ and $0 \leq \beta \leq m-1$.  
+The constraints of $\alpha$ and $\beta$ imply the following:
+\begin{align*}
+\alpha \mod m = \alpha \hspace{.25\textwidth} \beta \mod m = \beta 
+\end{align*}
 
-\begin{equation}
-\label{Eq2}
-\alpha \cdot x_2 + \beta \mod 26 = y_2
-\end{equation}
-With (1) and (2), Oscar has two equations with two unknowns: $\alpha$ and $\beta$. Thus, this system of equations can be solved, giving Oscar the keys $\alpha$ and $\beta$.
+\noindent \textbf{Derivation:}
+\hrule
+
+\begin{minipage}{.45\textwidth} %
+ \begin{align*}
+(x_1 \cdot \alpha + \beta) \mod m &= y_1 \\
+(x_2 \cdot \alpha + \beta - x_1 \cdot \alpha - \beta) \mod m &= y_2 - y_1 \\
+ \alpha \cdot (x_2 - x_1) \mod m &= y_2 - y_1 \\
+\text{\textbf{Let $\mathbf{x_2-x_1 = m^{-1}}$, which yields:}}\\
+  \alpha \cdot m^{-1} \mod m &= y_2 - y_1 \\
+  \Aboxed{\alpha &= y_2 - y_1}  \\
+  \\
+\end{align*}
+\end{minipage} %
+\begin{minipage}{.5\textwidth}
+\begin{align*}
+&(x_2 \cdot \alpha + \beta) \mod m = y_2 \\
+\text{Substitute the value $\alpha = y_2-y_1$:} & \\
+&x_2 \cdot (y_2 - y_1) + \beta \mod m = y_2 \\
+\text{Multiply both sides by $m^{-1}$:} & \\
+& x_2 \cdot y_2 - x_2 \cdot y_1 + \beta = y_2 \cdot m^{-1} \\
+& \beta = y_2 \cdot (x_2 - x_1) - x_2 \cdot y_2 + x_2 \cdot y_1  \\
+& \Aboxed{\beta = x_2 \cdot y_1 - y_2 \cdot x_1 }
+\end{align*}
+\end{minipage}
+
+
+Thus, by letting $x_2-x_1 = m^{-1}$, one arrives at the following system of equations, which can be solved for $\alpha$ and $\beta$, given values for $(x_1, y_1)$ and $(x_2, y_2)$.\footnote{Eq. \#2 includes $\mod m$ in case the difference $x_2 \cdot y_1 - y_2 \cdot x_1 > m$.  This follows from the equality $\beta \mod m = \beta$.}
+
+\vspace{-.5 cm}
+\begin{align*}
+[1] \hspace{.5cm} \alpha = y_2 - y_1 \hspace{.25\textwidth} [2] \hspace{.5cm}\beta = x_2 \cdot y_1 - y_2 \cdot x_1 \mod m 
+\end{align*}
 
 \newpage
 \subsection*{Appendix A:  Python Script}
