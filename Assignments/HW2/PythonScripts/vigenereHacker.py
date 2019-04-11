@@ -8,14 +8,15 @@ LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 #LETTERS = 'abcdefghijklmnopqrstuvwxyz'
 SILENT_MODE = False # If set to True, program doesn't print anything.
 NUM_MOST_FREQ_LETTERS = 4 # Attempt this many letters per subkey.
-MAX_KEY_LENGTH = 16 # Will not attempt keys longer than this.
+MAX_KEY_LENGTH = 4 # Will not attempt keys longer than this.
 NONLETTERS_PATTERN = re.compile('[^A-Z]')
 
 
 def main():
     # Instead of typing this ciphertext out, you can copy & paste it
     # from https://www.nostarch.com/crackingcodes/.
-    ciphertext = """kvqkqdgepdakywcjvzclkokdnkwhrgtlcffvgxgffljwegpkvavmvaqfqxvzgmpavwfkvsvwusiskfulcdnwpwoagkhgtwkypspvfgowulkuvzclkokdntgstltmgxcavzcffsndgykspuglqljwusowcffljsvayandqtgqvzggtvgjughljwrjgkkvgfvghljwwfklgvulclgkcffljwqjfwtkqxvzgghxkugjusrhqaplgvqngjowcuegtvkfilqjgywdclkgpkcffljwwfkxqjouqvgghekdkljcjabwkvaewugjwnhowigf"""
+    ciphertext = """ujltkvbpxowvvcoqcubiubrkjofvtlpwvbuwplxtvkpytvkflnbzqxdcqgkqeqxuykbvlturvpxtwdmcepwwjvlunrpmvtqrsflocuzcqerobkqujduarvyrvngujlomqpvkjpjxcvxtroizjvkjvlohddvqpvkjpjjuzsqqhylujlukwjukjikmaxowvvcoujrviktvxealucqevkjpnbdrvvludxuarvuwjnoncboqwgkqecqzvkjpjpfgcwwjhbpwzptnbvlucejvbpwpjikuhlofrvvwsawpfrtqzjvkpwwbpbdqddjloi"""
+    #ciphertext = """kvqkqdgepdakywcjvzclkokdnkwhrgtlcffvgxgffljwegpkvavmvaqfqxvzgmpavwfkvsvwusiskfulcdnwpwoagkhgtwkypspvfgowulkuvzclkokdntgstltmgxcavzcffsndgykspuglqljwusowcffljsvayandqtgqvzggtvgjughljwrjgkkvgfvghljwwfklgvulclgkcffljwqjfwtkqxvzgghxkugjusrhqaplgvqngjowcuegtvkfilqjgywdclkgpkcffljwwfkxqjouqvgghekdkljcjabwkvaewugjwnhowigf"""
     hackedMessage = hackVigenere(ciphertext)
 
     if hackedMessage != None:

@@ -61,7 +61,7 @@ def checkInputs(alpha, beta, alphabet):
 def main():
 
 	# Input your alphabet here:
-	alphabet = "abcdefghijklmnopqrstuvwxyz@!?"
+	alphabet = "abcdefghijklmnopqrstuvwxyz"
 			
 	# input your key values here:
 	alpha = 12
