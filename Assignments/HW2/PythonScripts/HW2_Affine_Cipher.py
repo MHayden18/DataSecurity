@@ -7,7 +7,7 @@ def ModularInverse(alpha, alphabet):
 	inv_alpha = 1
 	while (running and inv_alpha < size):
 		if ( (alpha * inv_alpha) % size == 1):
-			print( "Modular inverse of {0} is: {1}".format(alpha, inv_alpha) )
+			#print( "Modular inverse of {0} is: {1}".format(alpha, inv_alpha) )
 			running = False
 			return inv_alpha
 		else:
@@ -16,17 +16,17 @@ def ModularInverse(alpha, alphabet):
 	# No modular inverse for alpha
 	return 0
 
-def affineDecrypt(inv_alpha, beta, input, alphabet):
+def affineDecrypt(inv_alpha, beta, ciphertext, alphabet):
 	output = ""
-	for letter in input:
+	for letter in ciphertext:
 		in_index = alphabet.index(letter)
 		out_index = ( inv_alpha * (in_index - beta) ) % len(alphabet)
 		output += alphabet[out_index]
 	return output
 
-def affineEncrypt(alpha, beta, input, alphabet):
+def affineEncrypt(alpha, beta, plaintext, alphabet):
 	output = ""
-	for letter in input:
+	for letter in plaintext:
 		in_index = alphabet.index(letter)
 		out_index = ( in_index * alpha + beta) % len(alphabet)
 		output += alphabet[out_index]
@@ -64,8 +64,8 @@ def main():
 	alphabet = "abcdefghijklmnopqrstuvwxyz"
 			
 	# input your key values here:
-	alpha = 12
-	beta = 25
+	alpha = 21
+	beta = 14
 	
 	# Which mode are we in:
 	encrypt = False
@@ -76,12 +76,12 @@ def main():
 		
 	if encrypt:
 		print("Starting encrypt with alpha = {0} and beta = {1}: \n".format(alpha, beta))
-		input = "firstthesentenceandthentheevidencesaidthequeen"
-		output = affineEncrypt(alpha, beta, input, alphabet)
+		plaintext = "firstthesentenceandthentheevidencesaidthequeen"
+		output = affineEncrypt(alpha, beta, plaintext, alphabet)
 	else:
 		print("Starting decrypt with alpha = {0} and beta = {1}: \n".format(alpha, beta))
-		input = "!f@jvvwpjphvphupzhdvwphvwppqfdphupjzfdvwpoepph"
-		output = affineDecrypt(ModularInverse(alpha, alphabet), beta, input, alphabet)
+		ciphertext = "azwcwlugblyciuohxfoxaiallcsrrwhxobzzupubzxfuewbcxaxsxawbwpxfusbaxuzcxoxucokoabcxollubugaucpwhuakbobzzwgucxaexfoxaialljuohxhsupoaxfobzollukaobeuxwxfucoguxfoxaxoquxfacwjlakoxawbphuulyiaxfwsxobygubxolhucuhnoxawbwhrshrwcuwpunocawbobzxfoxaialliullobzpoaxfpsllyzacefohkuxfuzsxaucwpxfuwppaeuwbifaefaogojwsxxwubxuhcwfulrguk"
+		output = affineDecrypt(ModularInverse(alpha, alphabet), beta, ciphertext, alphabet)
 	
 	print( "The output is: \n" + output )
 
