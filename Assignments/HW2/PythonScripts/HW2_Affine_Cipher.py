@@ -80,7 +80,7 @@ def main():
 		output = affineEncrypt(alpha, beta, plaintext, alphabet)
 	else:
 		print("Starting decrypt with alpha = {0} and beta = {1}: \n".format(alpha, beta))
-		ciphertext = "azwcwlugblyciuohxfoxaiallcsrrwhxobzzupubzxfuewbcxaxsxawbwpxfusbaxuzcxoxucokoabcxollubugaucpwhuakbobzzwgucxaexfoxaialljuohxhsupoaxfobzollukaobeuxwxfucoguxfoxaxoquxfacwjlakoxawbphuulyiaxfwsxobygubxolhucuhnoxawbwhrshrwcuwpunocawbobzxfoxaialliullobzpoaxfpsllyzacefohkuxfuzsxaucwpxfuwppaeuwbifaefaogojwsxxwubxuhcwfulrguk"
+		ciphertext = "azwcwlugblyciuohxfoxaiallcsrrwhxobzzupubzxfuewbcxaxsxawbwpxfusbaxuzcxox"
 		output = affineDecrypt(ModularInverse(alpha, alphabet), beta, ciphertext, alphabet)
 	
 	print( "The output is: \n" + output )
