@@ -1,0 +1,153 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bigstrut}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage[top=.75in, bottom=.95in, left=.75in, right=.75in]{geometry}
+\usepackage{float}
+\usepackage{lastpage}
+\usepackage{tikz}
+\usepackage[latin1]{inputenc}
+\usepackage{color}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{calc}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{circuitikz}
+\usepackage{tabto}
+%\lstset{language=VHDL,basicstyle=\ttfamily}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\normalsize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=VHDL,                   % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\floatstyle{plain}
+\restylefloat{figure}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\setlength{\headheight}{59.0pt}
+\def\inputGnumericTable{}
+\fancyhead[CO]{\textbf{Air Force Institute of Technology\\Department of Electrical and Computer Engineering\\
+Data Security(CSCE 544)}\\ Homework \#1\\
+ Due Date: 22-April-2019}
+\lhead{\today}
+\rhead{Page \thepage{} of \pageref{LastPage} }
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
+
+\usepackage[style=numeric, sorting=none]{biblatex}
+\bibliography{myreferences.bib}
+
+\begin{document}
+
+\section*{You are able to place a probe at the output of a Linear Feedback Shift Register (LFSR) and observe the first 128 bits output.}
+
+
+\begin{table}[H]
+\centering
+\caption{Input Table Format}
+\begin{tabular}{lcccccccc}
+                                  & \multicolumn{8}{c}{\textbf{Bit}}                                                                                                                                                                      \\
+\textbf{Byte}                     & \multicolumn{1}{l}{1}  & \multicolumn{1}{l}{2}  & \multicolumn{1}{l}{3}  & \multicolumn{1}{l}{4}  & \multicolumn{1}{l}{5}  & \multicolumn{1}{l}{6}  & \multicolumn{1}{l}{7}  & \multicolumn{1}{l}{8}  \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x0}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x1}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x2}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x3}} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x4}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x5}} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x6}} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x7}} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x8}} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0x9}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0xA}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0xB}} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0xC}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0xD}} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0xE}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\multicolumn{1}{l|}{\textbf{0xF}} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{0} & \multicolumn{1}{c|}{1} \\ \cline{2-9} 
+\end{tabular}
+\end{table}
+\begin{table}[H]
+   \centering
+   \caption{128 Bits Output Vector Format}
+   \begin{verbatim}
+0	1	0	0	1	1	1	0	0	0	1	0	1	1	1	1	0	0	1	0	1	0	0	0	1	1	0	0	0	0	1	0	0	0	0	0	1	1	1	1	1	1	0	1	0	1	0	1	1	0	0	1	1	0	1	1	1	0	1	1	0	1	0	0	1	0	0	1	1	1	0	0	0	1	0	1	1	1	1	0	0	1	0	1	0	0	0	1	1	0	0	0	0	1	0	0	0	0	0	1	1	1	1	1	1	0	1	0	1	0	1	1	0	0	1	1	0	1	1	1	0	1	1	0	1	0	0	1
+   \end{verbatim} 
+\end{table}
+\subsection*{Encrypt the plaintext ``\textit{Hope this Helps!}'' by XORing the output of the LFSR and the plaintext. Assume 8-bits ASCII encoding for the plaintext.}
+The output is shown below, in Hex:
+
+	\begin{verbatim}
+	06 40 58 a7 2f a1 f3 dd ef 7e 19 e1 73 db 44 48
+	\end{verbatim}
+\newpage
+\subsection*{Explain the differences between the two different types of LFSR implementation: internal feedback, external feedback.}
+
+An internal feedback implementation keeps the XOR gates between flip flops in the LFSR.
+An external feedback sends all of the XOR outputs back to the input bit of the LFSR.
+For an internal feedback LFSR, the next input bit will be the bit that was just observed at the output; while an external feedback LFSR's input is determined by the output of the taps.
+
+\subsection*{Determine the LFSR's output for the next two bytes.}
+The next two bytes are shown below, which is simply a continuation of the repeating sequence.
+
+\begin{verbatim}
+0	0	1	1	1	0	0	0
+1	0	1	1	1	1	0	0
+\end{verbatim}
+
+\subsection*{Determine the LFSR's degree of polynomial and initial value.}
+Based on the knowledge that the polynomial is a maximum length sequence, I know it is a 6-bit LFSR because the sequence repeated after 63 bits.
+\begin{align*}
+\text{Length } &= 2^m - 1 \\
+		63 		&= 2^m - 1 \\
+		64		&= 2^m \\
+		m		&= 6
+\end{align*}
+
+The initial value was 
+\begin{verbatim}
+0	1	1	0	1	0
+\end{verbatim}
+
+\subsection*{Determine the LFSR's characteristics polynomial.}
+The characteristic polynomial $P(x)$ is shown below:
+\begin{equation}
+P(x) = x^6 + x^5 + 1
+\end{equation}
+
+
+\end{document}
