@@ -60,8 +60,8 @@
 \setlength{\headheight}{59.0pt}
 \def\inputGnumericTable{}
 \fancyhead[CO]{\textbf{Air Force Institute of Technology\\Department of Electrical and Computer Engineering\\
-Data Security(CSCE 544)}\\ Homework \#1\\
- Due Date: 22-April-2019}
+Data Security(CSCE 544)}\\ Homework \#3\\
+ Due Date: 22-April-2019\\Micah Hayden}
 \lhead{\today}
 \rhead{Page \thepage{} of \pageref{LastPage} }
 \newlength\tindent
@@ -117,9 +117,11 @@ The output is shown below, in Hex:
 \newpage
 \subsection*{Explain the differences between the two different types of LFSR implementation: internal feedback, external feedback.}
 
-An internal feedback implementation keeps the XOR gates between flip flops in the LFSR.
-An external feedback sends all of the XOR outputs back to the input bit of the LFSR.
-For an internal feedback LFSR, the next input bit will be the bit that was just observed at the output; while an external feedback LFSR's input is determined by the output of the taps.
+An internal feedback implementation keeps the XOR gates between flip flops in the LFSR.  
+Thus, the following input is the previous output.
+
+An external feedback LFSR sends all of the XOR outputs back to the input bit of the LFSR.
+Thus, the input for the next stage is not always the previous output.
 
 \subsection*{Determine the LFSR's output for the next two bytes.}
 The next two bytes are shown below, which is simply a continuation of the repeating sequence.
@@ -138,7 +140,9 @@ Based on the knowledge that the polynomial is a maximum length sequence, I know 
 		m		&= 6
 \end{align*}
 
-The initial value was 
+The initial value is shown below, and was determined by working backwards with the given output sequence.
+This is based on the assumption that the output is taken after clocking.
+
 \begin{verbatim}
 1	0	0	1	0	0
 \end{verbatim}
