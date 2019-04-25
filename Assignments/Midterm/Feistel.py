@@ -61,17 +61,16 @@ def main():
 	bytes = [0xFA, 0xB1, 0x39, 0x45]
 	outputs = []
 	for byte in bytes:
-		outputs.append( Feistel( byte ) )
+		outputs.append( hex( Feistel( byte ) ) )
 	
+	# Print outputs:
+	print(outputs)
+	
+	# Write outputs to file keeping array syntax:
 	outFile = open("FeistelOut.txt", "w")
-	for output in outputs:
-		if output < 16:
-			output = hex( output )
-			output = output[:2] + "0" + output[2:] + "\n"
-			outFile.write( output )
-		else:
-			outFile.write( hex(output ) + "\n" )
+	outFile.write("[" + ", ".join(outputs) + "]")
 	outFile.close()
+	
 	print("Done!")
 	
 	""" Function testing:
