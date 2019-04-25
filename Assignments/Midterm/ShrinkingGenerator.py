@@ -59,8 +59,7 @@ def main():
 	
 	# Output vector to file:
 	outFile = open("outputVector.txt", "w")
-	for output in outputs_A:
-		outFile.write( output )
+	outFile.write("[" + ", ".join( outputs_A ) + "]")
 	outFile.close()
 	
 
