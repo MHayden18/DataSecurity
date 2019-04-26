@@ -28,9 +28,9 @@ def main():
 	IV_A = '010101'
 	IV_S = '11100'
 	
-	# Taps are indexed from right to left:
-	taps_A = (5, 0)
-	taps_S = (3, 0)
+	# Taps are indexed from left to right:
+	taps_A = (0, 5)
+	taps_S = (1, 4)
 	
 	# Clock both LFSRs from their IV:
 	outBit, stateOut = lfsr(IV_A, taps_A )
