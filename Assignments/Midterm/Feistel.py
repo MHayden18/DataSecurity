@@ -24,6 +24,7 @@ def buildByte(right, left):
 def Feistel(inByte):
 	"""
 	inByte - input data
+	outByte - taken from the final round; left/right outputs are the would-be left/right inputs to the next round.
 	"""
 	# S Boxes for each round:
 	S = [ [5, 2, 15, 10, 6, 13, 7, 4, 14, 0, 1, 3, 12, 8, 9, 11],\
@@ -43,7 +44,7 @@ def Feistel(inByte):
 		# substitute the output of the fOut with the round's S-Box
 		sOut = S[round][fOut]
 		
-		# Set next rounds inputs:
+		# Set next round's inputs:
 		rightOut = left ^ sOut
 		leftOut = right
 		
