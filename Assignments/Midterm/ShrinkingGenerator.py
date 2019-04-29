@@ -33,15 +33,16 @@ def main():
 	taps_S = (1, 4)
 	
 	# Clock both LFSRs from their IV:
-	outBit, stateOut = lfsr(IV_A, taps_A )
-	outputs_A.append( outBit )
+	outBit_A, stateOut = lfsr(IV_A, taps_A )
 	states_A.append( stateOut )
 	
-	outBit, stateOut = lfsr(IV_S, taps_S )
+	outBit_S, stateOut = lfsr(IV_S, taps_S )
 	states_S.append( stateOut )
+	# Check if first bit is counted:
+	if outBit_S == '1':
+		outputs_A.append( outBitA )
 	
-	# Stop looping when A has 101 outputs because output 0 is not actually an output
-	while len(outputs_A) <= 100:
+	while len(outputs_A) < 100:
 		# Run S-LFSR:
 		outBit_S, stateOut_S = lfsr(states_S[-1], taps_S)
 		states_S.append(stateOut_S)
@@ -54,11 +55,8 @@ def main():
 			outputs_A.append( outBit_A )
 	
 	
-	# Discard output from clocking the IV:
-	outputs_A = outputs_A[ 1: ]
-	
 	# Output vector to file:
-	outFile = open("outputVector.txt", "w")
+	outFile = open("ShrinkingGen_Output.txt", "w")
 	outFile.write("[" + ", ".join( outputs_A ) + "]")
 	outFile.close()
 	
