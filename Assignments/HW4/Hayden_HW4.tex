@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bigstrut}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage[top=.75in, bottom=.95in, left=.75in, right=.75in]{geometry}
+\usepackage{float}
+\usepackage{lastpage}
+\usepackage{tikz}
+\usepackage[latin1]{inputenc}
+\usepackage{color}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{calc}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{circuitikz}
+%\usepackage{tabto}
+%\lstset{language=VHDL,basicstyle=\ttfamily}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\normalsize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=VHDL,                   % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\floatstyle{plain}
+\restylefloat{figure}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\setlength{\headheight}{59.0pt}
+\def\inputGnumericTable{}
+\fancyhead[CO]{\textbf{Air Force Institute of Technology\\Department of Electrical and Computer Engineering\\
+Data Security(CSCE 544)}\\ Homework \#4\\Micah Hayden \\
+ Due Date: \textbf{08-May-2019}}
+\lhead{\today}
+\rhead{Page \thepage{} of \pageref{LastPage} }
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
+\begin{document}
+
+\section*{You intercept the following ciphertext generated using the following RSA public-key: pk=\{e,n\}=\{23,20413\}}
+\subsection*{Determine the prime numbers $p$ and $q$:}
+I utilized the following script to determine $p$ and $q$:
+\lstinputlisting[language=Python]{findprimes.py}
+Thus: 
+$p = 137$, and $q = 149$.
+
+\subsection*{Determine Euler's totient function $\phi(n)$:}
+I calculated $\phi(n)$ as follows:
+\begin{align*}
+\phi(n) &= (p-1) \cdot (q-1) \\
+\phi(n) &= (137 - 1) \cdot (149 - 1) \\
+\phi(n) &= 20,128
+\end{align*}
+
+\subsection*{Determine the private-key=\{d,n\}:}
+To compute $d$, the following relationship must hold:
+\begin{equation}
+d \cdot e \equiv 1 \mod{\phi(n)} 
+\end{equation}
+Knowing that $e=23$, and $\phi(n) = 20,128$, I calculated $d= 13127$:\footnote{Website used for calculation:  https://www.cs.drexel.edu/~jpopyack/IntroCS/HW/RSAWorksheet.html}
+\begin{align*}
+e \cdot d &= 23 \cdot 13127 \\
+e \cdot d &= 301921 \\
+			&= 301921 \mod{20128} = 1
+\end{align*}
+
+\newpage
+
+\subsection*{Compute the plaintext for EACH of the following ciphertext :}
+\subsubsection*{\{236, 2743, 7983, 5919, 20213, 5520, 19563, 17083, 17083, 19326, 5919, 17258, 5919, 17215, 19563, 20213, 4940, 496\}}
+
+The plaintext is shown below, in Hex:
+\{41, 6E, 64, 20, 73, 74, 69, 6c, 6c, 2c, 20, 49, 20, 72, 69, 73, 65, 2e\}\footnote{Calculated using the following website: http://extranet.cryptomathic.com/rsacalc/index}
+
+\subsection*{Determine the ENGLISH plaintext:}
+I converted the Hex values above into ASCII characters, resulting in the following English:
+
+\textbf{And still, I rise.}
+
+\end{document}
