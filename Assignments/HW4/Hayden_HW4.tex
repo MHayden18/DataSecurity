@@ -69,11 +69,12 @@ Data Security(CSCE 544)}\\ Homework \#4\\Micah Hayden \\
 \setlength{\parindent}{0pt}
 \renewcommand{\indent}{\hspace*{\tindent}}
 \begin{document}
+The Python scripts utilized to accomplish the tasks are shown at the end of this document.
 
 \section*{You intercept the following ciphertext generated using the following RSA public-key: pk=\{e,n\}=\{23,20413\}}
 \subsection*{Determine the prime numbers $p$ and $q$:}
 
-I determined the following values for p and q:
+I determined the following values for p and q, using the find\_factors function in my rsa\_encode.py script:
 $p = 137$, and $q = 149$.
 
 \subsection*{Determine Euler's totient function $\phi(n)$:}
@@ -89,12 +90,8 @@ To compute $d$, the following relationship must hold:
 \begin{equation}
 d \cdot e \equiv 1 \mod{\phi(n)} 
 \end{equation}
-Knowing that $e=23$, and $\phi(n) = 20,128$, I calculated $d= 13127$:\footnote{Website used for calculation:  https://www.cs.drexel.edu/~jpopyack/IntroCS/HW/RSAWorksheet.html}
-\begin{align*}
-e \cdot d &= 23 \cdot 13127 \\
-e \cdot d &= 301921 \\
-			&= 301921 \mod{20128} = 1
-\end{align*}
+I used the eea.py script with $e=23$, and $\phi(n) = 20,128$.
+This produced $d= 13127$.
 
 
 \subsection*{Compute the plaintext for EACH of the following ciphertext :}
@@ -112,6 +109,10 @@ English plaintext:  And still, I rise.
 \end{verbatim}
 
 \newpage
-\subsection*{Python Script:}
+\subsection*{Python Scripts:}
+\lstinputlisting[language=Python]{eea.py}
+
+\newpage
 \lstinputlisting[language=Python]{rsa_decode.py}
+
 \end{document}

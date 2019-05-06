@@ -24,11 +24,18 @@ def rsa_decode(a, p, q):
 	return output
 	
 
+def mulinv(a, b):
+    """return x such that (x * a) % b == 1"""
+    g, x, _ = xgcd(a, b)
+    if g == 1:
+        return x % b
+
 def main():
 	inputs = [236, 2743, 7983, 5919, 20213, 5520, 19563, 17083, 17083, 19326, 5919, 17258, 5919, 17215, 19563, 20213, 4940, 496]
 	n = 20413
 	e = 23
 	p,q = find_factors(20413)
+	print( "d = {}".format( mulinv(e, (p-1)*(q-1) ) ) )
 	outputs = ""
 	plaintext = []
 	for input in inputs:
