@@ -9,6 +9,8 @@ def aks(p):
 	return True
 	
 def main():
+	#print("Is Prime: {}".format(aks(100123456789) ) )
+	
 	primes = []
 	upper = 1000
 	for number in range(1, upper):
