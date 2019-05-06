@@ -70,11 +70,12 @@ Data Security(CSCE 544)}\\ Homework \#4\\Micah Hayden \\
 \renewcommand{\indent}{\hspace*{\tindent}}
 \begin{document}
 
+The Python script utilized for this HW assignment is shown on the final page of the assignment.
+
 \section*{You intercept the following ciphertext generated using the following RSA public-key: pk=\{e,n\}=\{23,20413\}}
 \subsection*{Determine the prime numbers $p$ and $q$:}
-I utilized the following script to determine $p$ and $q$:
-\lstinputlisting[language=Python]{findprimes.py}
-Thus: 
+
+I determined the following values for p and q:
 $p = 137$, and $q = 149$.
 
 \subsection*{Determine Euler's totient function $\phi(n)$:}
@@ -102,12 +103,18 @@ e \cdot d &= 301921 \\
 \subsection*{Compute the plaintext for EACH of the following ciphertext :}
 \subsubsection*{\{236, 2743, 7983, 5919, 20213, 5520, 19563, 17083, 17083, 19326, 5919, 17258, 5919, 17215, 19563, 20213, 4940, 496\}}
 
-The plaintext is shown below, in Hex:
-\{41, 6E, 64, 20, 73, 74, 69, 6c, 6c, 2c, 20, 49, 20, 72, 69, 73, 65, 2e\}\footnote{Calculated using the following website: http://extranet.cryptomathic.com/rsacalc/index}
+The plaintext is shown below:
+\begin{verbatim}
+Plaintext: [65, 110, 100, 32, 115, 116, 105, 108, 108, 44, 32, 73, 32, 114, 105, 115, 101, 46]
+\end{verbatim}
 
 \subsection*{Determine the ENGLISH plaintext:}
-I converted the Hex values above into ASCII characters, resulting in the following English:
+The text output is shown below:
+\begin{verbatim}
+English plaintext:  And still, I rise.
+\end{verbatim}
 
-\textbf{And still, I rise.}
-
+\newpage
+\subsection*{Python Script:}
+\lstinputlisting[language=Python]{rsa_decode.py}
 \end{document}
