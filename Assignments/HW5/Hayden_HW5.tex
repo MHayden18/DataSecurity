@@ -72,10 +72,15 @@ Data Security(CSCE 544)}\\ Homework \#5\\
 \section{[10 points] Given the following RSA public-key: pk =\{e,n\} =\{5, 29623244235986089658629749102364587250074379396847895501789\\
 74023998496502140571365918899417655751929\}}
 \subsection{[8 points] Determine the prime numbers $p$ and $q$:}
-\vspace{.5in}
-\subsection{[2 points] Compute Euler's Totient function $\phi(n)$:}
-\vspace{.5in}
+The two prime numbers are shown below, factored using msieve:
+\begin{verbatim}
+p50 factor: 47720170418078602591676381343885005276759196131213
+p50 factor: 62076987522164082179415623963823156278081468066333
+\end{verbatim}
 
+\subsection{[2 points] Compute Euler's Totient function $\phi(n)$:}
+The totient function is shown below:
+$$ \phi(n) = 2962324423598608965862974910236458725007437939684679753021033781313725410135263657757344576991554384 $$
 
 \section{[30 points] Given prime numbers $p=315349$ and $q=259907$ and $e=5$:}
 \subsection{[7 Points] Construct public key pk=\{e,n\}}
