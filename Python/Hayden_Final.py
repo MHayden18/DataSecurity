@@ -38,7 +38,7 @@ def p3():
 		else:
 			print("{} - {} is composite".format(letters[count], number))
 		count += 1
-		
+
 
 def main():
 	
