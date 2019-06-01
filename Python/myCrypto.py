@@ -137,3 +137,37 @@ def rsa_encode(pt, p, q, e):
 	"""
 	n = p*q
 	return (pt ** e) % n
+	
+
+def isPrime_fermat(p, s):
+	exp = p - 1
+	for i in range(s):
+		temp = random.randint(2, p-2)
+		if pow(temp, exp, p) != 1:
+			return False
+	return True
+	
+	
+def isPrime_mr(p, s):
+	# Get p-1 in terms of 2^u * r:
+	temp = (p-1)
+	count = 0
+	while temp % 2 == 0:
+		temp = temp//2
+		count += 1
+	u = count
+	r = (p-1)//(2 ** u)
+	#test = pow(2, u) * r
+	
+	# Start primality test:
+	for i in range(s):
+		a = random.randint(2, p-2)
+		z = pow(a, r, p)
+		if (z != 1 and z != (p-1) ):
+			for j in range(1, u-1):
+				z = pow(z, 2, p)
+				if z == 1:
+					return False
+				if z == (p-1):	# Go to next loop:
+					break
+	return True
