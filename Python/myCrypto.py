@@ -163,11 +163,57 @@ def isPrime_mr(p, s):
 	for i in range(s):
 		a = random.randint(2, p-2)
 		z = pow(a, r, p)
-		if (z != 1 and z != (p-1) ):
-			for j in range(1, u-1):
-				z = pow(z, 2, p)
-				if z == 1:
+		if z == 1:
+			return True
+		if z != p-1:					# if z = 1, would have already returned
+			for j in range(1, u-1):		# Loop from 1 to u-1
+				z = pow(z, 2, p)		# z <- z^2 mod p
+				if z == 1:				
 					return False
-				if z == (p-1):	# Go to next loop:
-					break
+				if z == (p-1):	
+					return True
 	return True
+
+	
+def DSA_Primes_Gen():
+	# Generate q:
+	foundQ = False
+	foundP = False
+	upper = pow(2, 161)
+	lower = pow(2, 160)
+	
+	while( not foundQ ):
+		q = random.randint(lower, upper)
+		if q % 2 == 0:
+			foundQ = False
+		else:
+			foundQ = isPrime_fermat(q, 15)
+	for i in range(4096):
+		upper = pow(2, 1024)
+		lower = pow(2, 1023)
+		M = random.randint(lower, upper)
+		M_r = pow(M, 1, 2*q)
+		p = M - M_r + 1
+		if isPrime_fermat(p, 15):
+			break
+	return p, q
+	
+
+def DSA_PubKey(p, q):
+	upper = pow(2, 161)
+	lower = pow(2, 160)
+	alpha = random.randint(lower, upper)
+	d = random.randint(1, q-1)
+	beta = pow(alpha, d, p)
+	
+	print("Public Key:")
+	print("p = {}".format(p))
+	print("q = {}".format(q))
+	print("alpha = {}".format(alpha))
+	print("beta = {}".format(beta))
+	print("d = {}".format(d))
+	return alpha, beta, d
+	
+
+
+	
