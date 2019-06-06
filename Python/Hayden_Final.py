@@ -8,28 +8,35 @@ def p1():
 	
 
 def p2():
-	p, q = mc.DSA_Primes_Gen()
-	alpha, beta, d = mc.DSA_PubKey(p, q)
 	h_x = 120654484320263588514608261628026439285
+	p, q = mc.DSA_Primes_Gen()
+	alpha_gen, beta, d = mc.DSA_PubKey(p, q)
 	
 	# Generate signature:
-	ke = random.randint(1, q)
+	ke = random.randint(1, q-1)
 	k_inv = mc.mulinv(ke, q)
-	r = pow(alpha, ke, p) % q
+	while (not k_inv):
+		ke = random.randint(1, q-1)
+		k_inv = mc.mulinv(ke, q)
+	r1 = pow(alpha_gen, ke, p)
+	r = pow(r1, 1, q)
 	print("r = {}".format(r))
-	
-	s = ((h_x + d*r) * k_inv ) % q
+	s = pow( k_inv * (h_x + (d * r ) ), 1, q)
 	print("s = {}".format(s))
 	
 	# Verification:
 	w = mc.mulinv(s, q)
+	
 	u1 = pow( w * h_x, 1, q)
 	u2 = pow(w * r, 1, q)
-	v = (pow(alpha, u1, p) * pow(beta, u2, p) ) % q
-
-	print("\nVerification:")
-	print( "v = {}".format( v ) )
-	print( "r = {}".format( r ) )
+	temp = pow(alpha_gen, u1, p) * pow(beta, u2, p)
+	temp = pow(temp, 1, p)
+	v = pow(temp, 1, q)	# v = [( alpha ^ u1 * beta ^ u2 ) mod p ] mod q
+	
+	print("\nVerification: v and r should be equal mod q")
+	print( "v = {}".format( v  ) )
+	print( "r = {}".format( r  ) )
+	
 def p3():
 
 	numbers = [1798758724805508496502821597814073869874527469062680029407582127634855549890892589223,\

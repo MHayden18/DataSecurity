@@ -124,7 +124,7 @@ def rsa_decode(a, p, q):
 	d = 13127
 	# plaintext = ciphertext ^ d mod n
 	
-	output = (a ** d) % n
+	output = pow(a, d, n)
 	return output
 
 
@@ -136,7 +136,7 @@ def rsa_encode(pt, p, q, e):
 	returns - ciphertext
 	"""
 	n = p*q
-	return (pt ** e) % n
+	return pow(pt, e, n)
 	
 
 def isPrime_fermat(p, s):
@@ -171,7 +171,7 @@ def isPrime_mr(p, s):
 				if z == 1:				
 					return False
 				if z == (p-1):	
-					return True
+					break
 	return True
 
 	
@@ -179,40 +179,39 @@ def DSA_Primes_Gen():
 	# Generate q:
 	foundQ = False
 	foundP = False
-	upper = pow(2, 161)
-	lower = pow(2, 160)
+	upper = pow(2, 160)
+	lower = pow(2, 159)
 	
 	while( not foundQ ):
 		q = random.randint(lower, upper)
-		if q % 2 == 0:
-			foundQ = False
-		else:
-			foundQ = isPrime_fermat(q, 15)
+		foundQ = isPrime_fermat(q, 15)
 	for i in range(4096):
-		upper = pow(2, 1024)
-		lower = pow(2, 1023)
+		upper = pow(2, 1024-160)
+		lower = pow(2, 1023-160)
 		M = random.randint(lower, upper)
 		M_r = pow(M, 1, 2*q)
 		p = M - M_r + 1
 		if isPrime_fermat(p, 15):
-			break
-	return p, q
+			return p, q
+	return DSA_Primes_Gen()
 	
 
 def DSA_PubKey(p, q):
-	upper = pow(2, 161)
-	lower = pow(2, 160)
-	alpha = random.randint(lower, upper)
+	temp = random.randrange(2, p-2)
+	alpha_gen = pow(temp, ((p-1)//q), p)
+	
+	# Generate private key d, and public key beta:
 	d = random.randint(1, q-1)
-	beta = pow(alpha, d, p)
+	beta = pow(alpha_gen, d, p)
 	
 	print("Public Key:")
 	print("p = {}".format(p))
 	print("q = {}".format(q))
-	print("alpha = {}".format(alpha))
+	print("alpha_gen = {}".format(alpha_gen))
 	print("beta = {}".format(beta))
+	print("Private Key:")
 	print("d = {}".format(d))
-	return alpha, beta, d
+	return alpha_gen, beta, d
 	
 
 
